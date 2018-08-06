@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Welcome Employee Management App</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="dirPagination.js"></script>
+</head>
+<style>
+table, th, td {
+	border: 1px solid grey;
+	border-collapse: collapse;
+	padding: 5px;
+	margin: 20px;
+}
+
+table tr:nth-child(odd) {
+	background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+	background-color: #ffffff;
+}
+</style>
+
+<body>
+	<div ng-app="myApp" ng-controller="customersCtrl">
+		<!-- <p>Type name to get corresponding details :</p> -->
+		<table>
+			<caption>
+				<h3>Employee Dashboard</h3>
+				<p>
+			<input type="text" placeholder="search" ng-model="test">
+			<img src=searchicon.png>
+		    </p>
+			</caption>
+
+			<tr>
+				<th ng-click="orderByMe('emp_id')">Id</th>
+				<th ng-click="orderByMe('emp_name')">Name</th>
+				<th ng-click="orderByMe('emp_dept')">Department</th>
+				<th ng-click="orderByMe('emp_place')">Place</th>
+				<th ng-click="orderByMe('emp_jobtitle')">JobTitle</th>
+			</tr>
+            
+            
+			 <tr
+				dir-paginate="x in names | filter:test|orderBy:myOrderBy|itemsPerPage:10"> 
+				
+				
+				<td>{{ x.emp_id }}</td>
+				<td>{{ x.emp_name }}</td>
+				<td>{{ x.emp_dept }}</td>
+				<td>{{ x.emp_place }}</td>
+				<td>{{ x.emp_jobtitle }}</td>
+				<!-- <p>Status : {{statuscode}}</p>
+				<p>StatusText : {{statustext}}</p> -->
+			</tr>
+
+		</table>
+		
+		<div align="left">
+			<dir-pagination-controls boundary-links="true" direction-links="true">
+			</dir-pagination-controls>
+		</div>
+		
+		<!-- <input type="button" onclick="location.href('AddDetails.html')"
+			value="AddPerson"> -->
+		<!-- <input type="button" onclick="location.href('UpdateDetails.html')"
+			value="UpdateDetails"> -->
+		<button id="addbtn_id">Add Record</button>
+		<button id="editbtn_id">Edit Record</button>
+		
+		<div id="addform_id">
+			<form action="http://localhost:8082/NewApp/sumarani/Service/users"
+				method="post">
+				
+				Employee Id:<input type="text" name="empid" /> 
+				<br>Employee Name:<input type="text" name="empname" /> 
+				<br>Employee Dept:<input type="text" name="empdept" /> 
+				<br>Employee Place:<input type="text" name="empplace" /> 
+				<br>Employee Jobtittle:<input type="text" name="empjobtitle" /> <br> <br>
+				<button type="submit" id=closeaddform_id>ADD</button>
+				<!-- <button type="submit" ng-click="addMethod()">Addddd</button> -->
+			</form>
+		</div>
+     
+        <!-- <form
+				action="http://localhost:8082/NewApp/sumarani/Service/usersupdate"
+				method="post"> -->
+		<!-- 	
+		<div id=editform_id> ng-app="myApp" ng-controller="customersCtrl2">
+			<form action="http://localhost:8082/NewApp/sumarani/Service/usersupdate"
+				method="post">
+				Employee Id:<select ng-model="selectedId" ng-options="x.emp_id for x in names">
+                </select> 
+                Employee Id:<input type="text" name="empid"/><br>
+				Employee Name:<input type="text" name="empname"/> placeholder={{selectedId.emp_name}}> 
+				<br>Employee Dept:<input type="text" name="empdept"/> placeholder={{selectedId.emp_dept}}> 
+				<br>Employee Place:<input type="text" name="empplace"/> placeholder={{selectedId.emp_place}}> 
+				<br>Employee Jobtitle:<input type="text" name="empjobtitle"/> placeholder={{selectedId.emp_jobtitle}}> <br> <br>
+				<button type="submit" id=closeeditform_id>EDIT</button>
+             
+			</form>
+			</div> -->
+				
+			<div id=editform_id> <!-- ng-app="myApp" ng-controller="customersCtrl"> -->
+			<form action="http://localhost:8082/NewApp/sumarani/Service/usersupdate"
+				method="post">
+				<!-- Employee Id:<select ng-model="selectedId" ng-options="x.emp_id for x in names">
+                </select>  -->
+               Employee Id:<input type="text" name="empid"/>
+				<br>Employee Name:<input type="text" name="empname"/> <!-- placeholder={{selectedId.emp_name}}> --> 
+				<br>Employee Dept:<input type="text" name="empdept"/> <!-- placeholder={{selectedId.emp_dept}}> --> 
+				<br>Employee Place:<input type="text" name="empplace"/> <!-- placeholder={{selectedId.emp_place}}> --> 
+				<br>Employee Jobtitle:<input type="text" name="empjobtitle"/> <!-- placeholder={{selectedId.emp_jobtitle}}> --> <br> <br>
+				<button type="submit" id=closeeditform_id>EDIT</button>
+             
+			</form>
+			</div>	
+	
+				
+		</div>
+
+
+	<script type="text/javascript">
+		var Button = document.getElementById('closeaddform_id');
+		Button.onclick = function() {
+			document.getElementById('addform_id').style.visibility = 'hidden';
+		}
+	</script>
+	<script type="text/javascript">
+		var Button = document.getElementById('addbtn_id');
+
+		document.getElementById('addform_id').style.visibility = 'hidden';
+
+		Button.onclick = function() {
+			document.getElementById('addform_id').style.visibility = 'visible';
+		}
+	</script>
+
+	<script type="text/javascript">
+		var Button = document.getElementById('closeeditform_id');
+		Button.onclick = function() {
+			document.getElementById('editform_id').style.visibility = 'hidden';
+		}
+	</script>
+	<script type="text/javascript">
+		var Button = document.getElementById('editbtn_id');
+
+		document.getElementById('editform_id').style.visibility = 'hidden';
+
+		Button.onclick = function() {
+			document.getElementById('editform_id').style.visibility = 'visible';
+		}
+	</script>
+
+
+	<script>
+		var app = angular.module('myApp',
+				[ 'angularUtils.directives.dirPagination' ]);
+		app.controller('customersCtrl', function($scope, $http) {
+			$http({
+				method : "GET",
+				url : "http://localhost:8082/NewApp/sumarani/Service/owner"
+			}).then(function mySuccess(response) {
+				$scope.names = response.data;
+				$scope.statuscode = response.status;
+				$scope.statustext = response.statusText;
+			}, function myError(response) {
+				$scope.statuscode = response.status;
+			});
+			/* $scope.maxsize=2;
+			$scope.boundarylinks="true";
+			$scope.direction-links="true"; */
+			/* $scope.number = 5;
+			$scope.getNumber = function(num) {
+			    return new Array(num);  */  
+			
+			 $scope.orderByMe = function(x) {
+				$scope.myOrderBy = x;
+
+			} 
+			    
+				/* $http({
+					method : "POST",
+					url : "http://localhost:8082/NewApp/sumarani/Service/users"
+				}).then(function mySuccess(response) {
+					$scope.names1 = response.data;
+					$scope.statuscode = response.status;
+					$scope.statustext = response.statusText;
+				}, function myError(response) {
+					$scope.statuscode = response.status;
+				}); */
+			
+
+		});
+	</script>
+	
+
+	
+	 <script>
+	var app = angular.module('newApp',[]);
+	app.controller('customCtrl', function($scope, $http) {
+		
+		$http({
+			method : "POST",
+			url : "http://localhost:8082/NewApp/sumarani/Service/usersupdate"
+		}).then(function mySuccess(response) {
+			$scope.names1 = response.data;
+			$scope.statuscode = response.status;
+			$scope.statustext = response.statusText;
+		}, function myError(response) {
+			$scope.statuscode = response.status;
+		});
+	});
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<title>Add Details</title>
+</head>
+<body>
+<!-- <form action="http://localhost:8082/NewApp/sumarani/Service/users" method="post"> 
+Student Id:<input type="text" name="stid"/>
+<br>StudentName:<input type="text" name="stname"/>
+<br>StudentDept:<input type="text" name="stdept"/>
+<br>Studentusername:<input type="text" name="stusername"/>
+<br>Studentpwd:<input type="text" name="stpwd"/>
+<br>
+<br><input type="submit" value="Add"/>
+<button type="submit" ng-click="addMethod">Addddd</button>
+<button ng-click="updateModel('POST','http://localhost:8082/NewApp/sumarani/Service/users')">Add</button>
+</form> -->
+<div ng-app="myApp" ng-controller="myCtrl"> 
+
+<form action="http://localhost:8082/NewApp/sumarani/Service/users" method="post">
+Student Id:<input type="text" name="stid"/>
+<br>StudentName:<input type="text" name="stname"/>
+<br>StudentDept:<input type="text" name="stdept"/>
+<br>Studentusername:<input type="text" name="stusername"/>
+<br>Studentpwd:<input type="text" name="stpwd"/>
+<br>
+<!-- <br><input type="submit" value="Add" ng-click="addMethod"/> -->
+ <button type="submit" ng-click="addMethod()">Addddd</button> 
+ 
+
+</form>
+
+
+
+
+
+
+<p>Data : {{content}}</p>
+<p>Status : {{statuscode}}</p>
+<p>StatusText : {{statustext}}</p>
+
+</div>
+
+
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+	$scope.addMethod=function()
+	{ 
+  $http.post("http://localhost:8082/NewApp/sumarani/Service/users")
+	  /* method:"POST",
+	  url:"http://localhost:8082/NewApp/sumarani/Service/users" */
+  
+  .then(function mySuccess(response) {
+      $scope.content = response.data;
+      $scope.statuscode = response.status;
+      $scope.statustext = response.statusText;            
+  },
+  
+   function myError(response){
+	  $scope.content = "error";
+      $scope.statuscode = response.status;
+      $scope.statustext = response.statusText;
+  }); 
+   /* $scope.updateModel = function(method, url) {
+      $scope.method = method;
+      $scope.url = url;
+  }  */
+	};
+	$scope.updateMethod=function()
+	{ 
+  $http.put("http://localhost:8082/NewApp/sumarani/Service/usersupdate")
+	  /* method:"POST",
+	  url:"http://localhost:8082/NewApp/sumarani/Service/users" */
+  
+  .then(function mySuccess(response) {
+      $scope.content = response.data;
+      $scope.statuscode = response.status;
+      $scope.statustext = response.statusText;            
+  },
+  
+   function myError(response){
+	  $scope.content = "error";
+      $scope.statuscode = response.status;
+      $scope.statustext = response.statusText;
+  }); 
+   /* $scope.updateModel = function(method, url) {
+      $scope.method = method;
+      $scope.url = url;
+  }  */
+	};
+	
+});
+</script>
+
+</body>
+</html>
